@@ -1,18 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCar,
-  faBars,
-  faTimes,
-  faSignInAlt,
-  faChevronRight,
-  faStar,
-  faMapMarkerAlt,
-  faPhone,
-  faEnvelope,
-} from "@fortawesome/free-solid-svg-icons";
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -133,15 +121,12 @@ export default function Home() {
 
   return (
     <div className='min-h-screen bg-white'>
+      {/* Navbar */}
       <nav className='fixed w-full top-0 z-50 bg-white shadow-lg'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-between items-center h-20'>
             <div className='flex items-center gap-3'>
-              <FontAwesomeIcon
-                icon={faCar}
-                size='2x'
-                style={{ color: "#4773ff" }}
-              />
+              <span className='text-3xl'>🚗</span>
               <span
                 className='text-2xl font-black'
                 style={{ color: "#4773ff" }}
@@ -150,6 +135,7 @@ export default function Home() {
               </span>
             </div>
 
+            {/* Desktop Menu */}
             <ul className='hidden md:flex gap-8 items-center'>
               <li>
                 <a
@@ -180,20 +166,21 @@ export default function Home() {
                   className='flex items-center gap-2 px-6 py-2 rounded-lg font-bold transition hover:scale-105'
                   style={{ backgroundColor: "#ebf02a", color: "#1a1a1a" }}
                 >
-                  <FontAwesomeIcon icon={faSignInAlt} />
-                  Login
+                  🔐 Login
                 </button>
               </li>
             </ul>
 
+            {/* Mobile Menu Button */}
             <button
-              className='md:hidden p-2'
+              className='md:hidden p-2 text-2xl'
               onClick={() => setMenuOpen(!menuOpen)}
             >
-              <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} size='lg' />
+              {menuOpen ? "✕" : "☰"}
             </button>
           </div>
 
+          {/* Mobile Menu */}
           {menuOpen && (
             <div className='md:hidden pb-4 space-y-3'>
               <a href='#home' className='block font-semibold py-2'>
@@ -209,14 +196,14 @@ export default function Home() {
                 className='w-full flex items-center justify-center gap-2 px-6 py-2 rounded-lg font-bold'
                 style={{ backgroundColor: "#ebf02a", color: "#1a1a1a" }}
               >
-                <FontAwesomeIcon icon={faSignInAlt} />
-                Login
+                🔐 Login
               </button>
             </div>
           )}
         </div>
       </nav>
 
+      {/* Hero Section */}
       <section
         id='home'
         className='pt-20 min-h-screen flex items-center justify-center relative overflow-hidden'
@@ -249,12 +236,12 @@ export default function Home() {
             className='inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-lg transition hover:scale-105 text-white'
             style={{ backgroundColor: "#4773ff" }}
           >
-            Explore Cars
-            <FontAwesomeIcon icon={faChevronRight} />
+            Explore Cars →
           </a>
         </div>
       </section>
 
+      {/* Cars & Trips Section */}
       <section id='cars' className='py-24 px-4'>
         <div className='max-w-7xl mx-auto'>
           <div className='text-center mb-16'>
@@ -266,7 +253,8 @@ export default function Home() {
             </p>
           </div>
 
-          <div className='flex justify-center gap-4 mb-12'>
+          {/* Tab Buttons */}
+          <div className='flex justify-center gap-4 mb-12 flex-wrap'>
             <button
               onClick={() => setActiveTab("cars")}
               className='px-8 py-3 rounded-xl font-bold transition'
@@ -275,8 +263,7 @@ export default function Home() {
                 color: activeTab === "cars" ? "white" : "#4773ff",
               }}
             >
-              <FontAwesomeIcon icon={faCar} className='mr-2' />
-              Daily Rental
+              🚗 Daily Rental
             </button>
             <button
               onClick={() => setActiveTab("trips")}
@@ -286,11 +273,11 @@ export default function Home() {
                 color: activeTab === "trips" ? "white" : "#4773ff",
               }}
             >
-              <FontAwesomeIcon icon={faMapMarkerAlt} className='mr-2' />
-              Trip Packages
+              📍 Trip Packages
             </button>
           </div>
 
+          {/* Daily Rental Cars */}
           {activeTab === "cars" && (
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
               {cars.map((car) => (
@@ -298,6 +285,7 @@ export default function Home() {
                   key={car.id}
                   className='group rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-white border border-gray-100'
                 >
+                  {/* Car Image */}
                   <div
                     className='h-64 flex items-center justify-center text-9xl relative overflow-hidden'
                     style={{ backgroundColor: "#f0f4ff" }}
@@ -307,30 +295,21 @@ export default function Home() {
                     </span>
                   </div>
 
+                  {/* Card Content */}
                   <div className='p-6'>
                     <h3 className='text-2xl font-bold mb-2'>{car.name}</h3>
 
+                    {/* Rating */}
                     <div className='flex items-center gap-2 mb-4'>
-                      {Array(5)
-                        .fill(0)
-                        .map((_, i) => (
-                          <FontAwesomeIcon
-                            key={i}
-                            icon={faStar}
-                            size='sm'
-                            style={{
-                              color:
-                                i < Math.floor(car.rating)
-                                  ? "#ebf02a"
-                                  : "#e5e7eb",
-                            }}
-                          />
-                        ))}
+                      <span className='text-lg'>
+                        {"⭐".repeat(Math.floor(car.rating))}
+                      </span>
                       <span className='text-sm text-gray-600'>
-                        {car.rating} ({car.reviews} reviews)
+                        {car.rating} ({car.reviews})
                       </span>
                     </div>
 
+                    {/* Features */}
                     <div className='flex flex-wrap gap-2 mb-6'>
                       {car.features.map((feature, i) => (
                         <span
@@ -346,6 +325,7 @@ export default function Home() {
                       ))}
                     </div>
 
+                    {/* Price */}
                     <div className='mb-6'>
                       <span
                         className='text-3xl font-black'
@@ -356,6 +336,7 @@ export default function Home() {
                       <span className='text-gray-600'> {car.period}</span>
                     </div>
 
+                    {/* Button */}
                     <button
                       onClick={() => handleRentNow(car)}
                       className='w-full py-3 rounded-xl font-bold text-lg transition hover:scale-105'
@@ -369,6 +350,7 @@ export default function Home() {
             </div>
           )}
 
+          {/* Trip Packages */}
           {activeTab === "trips" && (
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
               {tripPackages.map((trip) => (
@@ -376,6 +358,7 @@ export default function Home() {
                   key={trip.id}
                   className='group rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-white border border-gray-100'
                 >
+                  {/* Trip Image */}
                   <div
                     className='h-64 flex items-center justify-center text-9xl relative overflow-hidden'
                     style={{ backgroundColor: "#f0f4ff" }}
@@ -385,33 +368,24 @@ export default function Home() {
                     </span>
                   </div>
 
+                  {/* Card Content */}
                   <div className='p-6'>
                     <h3 className='text-2xl font-bold mb-2'>{trip.name}</h3>
                     <p className='text-gray-600 text-sm mb-3'>
                       {trip.description}
                     </p>
 
+                    {/* Rating */}
                     <div className='flex items-center gap-2 mb-4'>
-                      {Array(5)
-                        .fill(0)
-                        .map((_, i) => (
-                          <FontAwesomeIcon
-                            key={i}
-                            icon={faStar}
-                            size='sm'
-                            style={{
-                              color:
-                                i < Math.floor(trip.rating)
-                                  ? "#ebf02a"
-                                  : "#e5e7eb",
-                            }}
-                          />
-                        ))}
+                      <span className='text-lg'>
+                        {"⭐".repeat(Math.floor(trip.rating))}
+                      </span>
                       <span className='text-sm text-gray-600'>
                         {trip.rating} ({trip.reviews})
                       </span>
                     </div>
 
+                    {/* Duration & Destinations */}
                     <div className='mb-4'>
                       <p className='text-sm font-semibold text-gray-700 mb-2'>
                         ⏱️ {trip.duration}
@@ -421,6 +395,7 @@ export default function Home() {
                       </p>
                     </div>
 
+                    {/* Includes */}
                     <div className='flex flex-wrap gap-2 mb-6'>
                       {trip.includes.map((item, i) => (
                         <span
@@ -436,6 +411,7 @@ export default function Home() {
                       ))}
                     </div>
 
+                    {/* Price */}
                     <div className='mb-6'>
                       <span
                         className='text-3xl font-black'
@@ -449,6 +425,7 @@ export default function Home() {
                       </span>
                     </div>
 
+                    {/* Button */}
                     <button
                       onClick={() => handleRentNow(trip)}
                       className='w-full py-3 rounded-xl font-bold text-lg transition hover:scale-105'
@@ -464,6 +441,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Contact Section */}
       <section
         id='contact'
         className='py-24 px-4'
@@ -481,17 +459,9 @@ export default function Home() {
 
           <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
             {[
-              { icon: faPhone, label: "Phone", value: "+62 812 3456 7890" },
-              {
-                icon: faEnvelope,
-                label: "Email",
-                value: "info@rentcarpro.com",
-              },
-              {
-                icon: faMapMarkerAlt,
-                label: "Location",
-                value: "Jakarta, Indonesia",
-              },
+              { icon: "📞", label: "Phone", value: "+62 812 3456 7890" },
+              { icon: "✉️", label: "Email", value: "info@rentcarpro.com" },
+              { icon: "📍", label: "Location", value: "Jakarta, Indonesia" },
             ].map((contact, i) => (
               <div
                 key={i}
@@ -499,14 +469,10 @@ export default function Home() {
               >
                 <div className='flex justify-center mb-4'>
                   <div
-                    className='p-4 rounded-full'
+                    className='p-4 rounded-full text-3xl'
                     style={{ backgroundColor: "#f0f4ff" }}
                   >
-                    <FontAwesomeIcon
-                      icon={contact.icon}
-                      size='lg'
-                      style={{ color: "#4773ff" }}
-                    />
+                    {contact.icon}
                   </div>
                 </div>
                 <h3 className='font-bold text-lg mb-2'>{contact.label}</h3>
@@ -517,6 +483,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Footer */}
       <footer className='py-8 px-4' style={{ backgroundColor: "#4773ff" }}>
         <div className='max-w-7xl mx-auto text-center text-white'>
           <p className='font-semibold'>
@@ -525,16 +492,18 @@ export default function Home() {
         </div>
       </footer>
 
+      {/* Rental Modal */}
       {selectedCar && (
         <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50'>
-          <div className='bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl animate-in'>
-            <h3 className='text-2xl font-black mb-4'>Confirm Rental</h3>
-            <p className='text-gray-600 mb-2'>You're about to rent:</p>
+          <div className='bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl'>
+            <h3 className='text-2xl font-black mb-4'>Confirm Booking</h3>
+            <p className='text-gray-600 mb-2'>You're about to book:</p>
             <p className='text-3xl font-black' style={{ color: "#4773ff" }}>
               {selectedCar.name}
             </p>
             <p className='text-gray-600 mt-4 mb-6'>
-              at <span className='font-bold'>{selectedCar.price}</span> per day
+              at <span className='font-bold'>{selectedCar.price}</span>{" "}
+              {selectedCar.period}
             </p>
             <div className='flex gap-4'>
               <button
@@ -546,7 +515,7 @@ export default function Home() {
               <button
                 onClick={() => {
                   setSelectedCar(null);
-                  alert(`🎉 ${selectedCar.name} rented successfully!`);
+                  alert(`🎉 ${selectedCar.name} booked successfully!`);
                 }}
                 className='flex-1 py-3 rounded-xl font-bold text-white'
                 style={{ backgroundColor: "#4773ff" }}
